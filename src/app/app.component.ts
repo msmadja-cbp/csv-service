@@ -1,27 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { CsvService } from './csv-service/csv.service';
-import { SupportedFormat } from './csv-service/types';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { PreviewFactoryService } from './file-preview/preview-factory.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'csv-poc';
+  files: { name: string, url: string, type: string }[] = [
+    {
+      name: 'Nate',
+      url: 'http://localhost:8887/9de4a997-9c20-479d-ac0d-439741f37205',
+      type: 'csv',
+    },
+    {
+      name: 'Moshe',
+      url: 'http://localhost:8887/ir211wk12sample',
+      type: 'csv',
+    },
+    {
+      name: 'Shuki',
+      url: 'http://localhost:8887/abcde',
+      type: 'csv',
+    }
+  ];
 
-  dynamic$: Observable<any>;
+  constructor(
+    private readonly previewService: PreviewFactoryService,
+    private readonly modalService: BsModalService,
 
-  constructor(private readonly csvService: CsvService) {
+  ) { }
 
+  isSupported(type: string): boolean {
+    return this.previewService.isSupported(type);
   }
 
-  async ngOnInit() {
-    this.dynamic$ = from(this.csvService.parse({
-      csv: 'http://localhost:8887/9de4a997-9c20-479d-ac0d-439741f37205',
-      download: true,
-      format: SupportedFormat.TABLE,
-    }));
+  open(type: string, initialState: any): void {
+    const component: any = this.previewService.get(type);
+    if (component) {
+      this.modalService.show(component, {
+        initialState: initialState,
+      });
+    }
   }
+
 }

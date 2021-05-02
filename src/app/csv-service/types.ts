@@ -14,7 +14,6 @@ export interface ParsingRequest {
 export type ParsingResponse = string | any;
 
 
-
 export interface Csv {
     parse(request: ParsingRequest): Promise<ParsingResponse>;
 }

@@ -1,3 +1,10 @@
-<h2>Csv preview</h2>
+<h2>File manager</h2>
 
-<kendo-grid [data]="(dynamic$ | async)"></kendo-grid>
+<ol *ngFor="let file of files">
+    <li>
+        <i class="bi bi-list-task"></i>
+        {{file.name}}.{{file.type}}
+        <a *ngIf="isSupported(file.type)" (click)="open(file.type, {url: file.url, title: file.name})"><u>click
+                here</u></a>
+    </li>
+</ol>

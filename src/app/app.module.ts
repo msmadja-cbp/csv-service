@@ -6,12 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CsvPreviewComponent } from './file-preview/previews/csv-preview/csv-preview.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CsvPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -19,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     GridModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
